@@ -77,7 +77,8 @@ public class TabGroupView extends LinearLayout {
      * 初始化
      */
     private void init() {
-
+        this.setGravity(Gravity.CENTER);
+        this.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         topIndicator = new TabIndicator(mContext);
         bottomIndicator = new TabIndicator(mContext);
 
