@@ -15,7 +15,7 @@ import java.util.List;
  * Created by color on 17/2/28.
  */
 
-public class TabGroupView extends LinearLayout {
+public class TabGroupView extends LinearLayout implements TabIndicator.OnAnimEndListener {
 
     private Context mContext;
     private TabIndicator topIndicator;
@@ -29,6 +29,8 @@ public class TabGroupView extends LinearLayout {
     private int gravity = Gravity.CENTER;
     private float textSize = 14;
     private int indicatorHeight = 1;
+    private int selectPosition = 0;
+    private int currentPosition = 0;
 
     private OnTabChangeListener onTabChangeListener;
     private ViewPager viewPager;
@@ -145,6 +147,7 @@ public class TabGroupView extends LinearLayout {
                 TabText t = (TabText) v;
                 int position = Integer.parseInt((String) t.getTag());
                 int tabPosition = topIndicator.getPosition();
+                selectPosition = position;
 
                 if (position == tabPosition) {
                     return;
@@ -161,6 +164,7 @@ public class TabGroupView extends LinearLayout {
 
                 TabText startTab = texts.get(tabPosition);
                 TabText currentTab = texts.get(position);
+                currentPosition = position;
 
 
                 float startX = startTab.getX();
@@ -191,8 +195,22 @@ public class TabGroupView extends LinearLayout {
             }
         });
 
+        topIndicator.setPosition(0);
+        topIndicator.setPosition(0);
+
         tab.setTag((texts.size() - 1) + "");
         contentLayout.addView(tab);
+    }
+
+    @Override
+    public void animEnd() {
+        if (onTabChangeListener != null) {
+            onTabChangeListener.onTabChange(currentPosition);
+        }
+    }
+
+    public TabText getTabAt(int position) {
+        return texts.get(position);
     }
 
     public interface OnTabChangeListener {

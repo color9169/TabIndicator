@@ -123,4 +123,8 @@ public class TabIndicator extends View {
                 (int) mPaint.getStrokeWidth()
         );
     }
+
+    public interface OnAnimEndListener {
+        void animEnd();
+    }
 }
